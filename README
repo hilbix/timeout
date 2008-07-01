@@ -1,0 +1,19 @@
+$Header$
+
+Compile:
+	make
+
+Usage:
+	timeout [-signal...[@seconds]] seconds [-|program [args...]]
+
+Help:
+	see DESCRIPTION
+
+Source:
+	http://www.scylla-charybdis.com/tool.php/timeout
+
+webmaster@scylla-charybdis.com
+$Log$
+Revision 1.1  2008-07-01 18:55:08  tino
+save
+

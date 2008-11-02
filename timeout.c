@@ -3,7 +3,7 @@
  * Execute a program only a certain time.
  * Rewrite of a program which is over 10 years old.
  *
- * Copyright (C)2008 Valentin Hilbig, webmaster@scylla-charybdis.com
+ * Copyright (C)2008 Valentin Hilbig <webmaster@scylla-charybdis.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -21,9 +21,11 @@
  * 02110-1301 USA.
  *
  * $Log$
+ * Revision 1.3  2008-11-02 00:40:07  tino
+ * Bugfix, idle mode was inverted
+ *
  * Revision 1.2  2008-11-02 00:13:56  tino
  * First version
- *
  */
 
 #include "tino/alarm.h"
@@ -162,7 +164,7 @@ do_copy(int idle)
 	  ex("read STDIN");
 	}
 
-      if (!idle)
+      if (idle)
 	schedule();
 
       for (pos=0; pos<got; )
@@ -183,7 +185,7 @@ do_copy(int idle)
 	  if (!put)
 	    ex("zero write?");
 
-	  if (!idle)
+	  if (idle)
 	    schedule();
 
 	  pos	+= put;

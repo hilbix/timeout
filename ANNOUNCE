@@ -1,1 +1,3 @@
-Enter announcement here.
+I needed this version as a replacement for the broken variant
+which comes with Debian Etch (which does not return the
+return value of the forked command).

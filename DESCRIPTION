@@ -2,65 +2,92 @@ Execute a command or pipe only for a given duration.
 # $Header$
 #
 # $Log$
-# Revision 1.1  2008-07-01 18:55:08  tino
-# save
+# Revision 1.2  2008-11-02 00:13:56  tino
+# First version
 #
 
-Timeout is a complete rewrite of a program which I had before.
-It is used to restrict the time duration a program runs.
+Timeout is a complete rewrite of a program which I had before.  It is
+used to restrict the time duration a program runs.  Note that the
+"timeout" command which comes with Debian Etch is seriously broken,
+therefor I had to create this one here.
 
 Just call it as
 
-timeout [-signal...[@seconds]] seconds[.fraction] [-|program [args...]]
+timeout [-v] [-signal[@seconds]...] seconds [-|program [args...]]
 
 <UL>
+
+<LI> If -v is present, verbose information is printed.
+
+<LI> If -v is doubled, the current timeout is shown.
+
+<LI> Returns the exit status of the program, 210 on error.
+
 <LI> If execution takes longer than the given number of seconds,
-timeout terminates.
+timeout terminates the program and returns 255.
 
-<LI> Seconds can hava a fraction.  This is no real floating point number.
+<LI> If signals are given, the signals are sent to the program with
+the given delay between.  The default is -1 -15 -9 and a one second
+delay.
 
-<LI> If signals are given, the signals are sent to the program with the
-given delay between.  The default is -1 -15 -9 and a one second delay.
+<LI> If program is missing it works like /bin/cat.  In this case, it
+just terminates after the given duration with exit status 211.
 
-<LI> If program is missing it works as a pipe processor.  In this case,
-it just terminates after the given duration.
+<LI> If program is given as '-' the timeout occurs after a silence
+phase of the given duration.  Silence is either reading or writing
+starves.
 
-<LI> If program is given as '-' the timeout occurs after a silence phase
-of the given duration.  Silence is either reading or writing starves.
 </UL>
 
 Future (not yet implemented) plans:
 
 <UL>
-<LI> On HUP or TERM starts the timeout cycle for signals.
+
+<LI> Seconds can hava a fraction.  This is no real floating point
+number.
+
+<LI> On HUP or TERM, the timeout cycle for signals is started.
 
 <LI> If program is given as '-number' then the process is attached to
-and the signal is sent to the process after this time if the
-process still exists (is like a delayed kill).  This is free from
-race conditions like "sleep $timeout; kill -9 $pid".
+and the signal is sent to the process after this time if the process
+still exists (is like a delayed kill).  This is free from race
+conditions like "sleep $timeout; kill -9 $pid".
 
-<LI> Allow '-[n]:program' to check stdin, stdout or stderr for silence (pipe)
+<LI> Allow '-[n]:program' to check stdin, stdout or stderr for silence
+(pipe)
 
 <LI> Implement gerneric extended socket processing, this is, program
-can be given as connect:host:port or connect:/unixsocket etc.
-If prefixed with - it, again, monitors for silence.
-This shall work for "exec:"- and "pty:"-URLs, too, which open a
-socket to a process.
+can be given as connect:host:port or connect:/unixsocket etc.  If
+prefixed with - it, again, monitors for silence.  This shall work for
+"exec:"- and "pty:"-URLs, too, which open a socket to a process.
+
 </UL>
 
 Examples:
 
 <UL>
 <LI> timeout 5<BR>
+
 same as 'sleep 5'
 
 <LI> timeout 5 < /var/log/messages<BR>
+
 same as 'sleep 5 & tail -+0 --pid=$! -f /var/log/messages'
 
 <LI> timeout 5 - < /var/log/messages<BR>
-same as 'cat /var/log/messages | while read -t5 data; do echo "$data"; done'
+
+nearly the same as
+
+'cat /var/log/messages | while read -t5 data; do echo "$data"; done'
 
 <LI> timeout 5 ls<BR>
-nearly same as 'ls & PID=$!; { sleep 5; kill $PID; } & PID2=$!; wait $PID; kill $PID2'
-(Please note that 'ls & PID=$!; sleep 5; kill $PID' would always delay 5 seconds.)
+
+nearly same as
+
+'ls & PID=$!; { sleep 5; kill $PID; } & PID2=$!; wait $PID; kill
+$PID2'
+
+(Please note that 'ls & PID=$!; sleep 5; kill $PID' would always delay
+5 seconds.)
+
 </UL>

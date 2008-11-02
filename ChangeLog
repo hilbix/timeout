@@ -1,0 +1,4 @@
+2008-11-02  Valentin Hilbig  <tino@firebird.03.softkill.net>
+
+	* timeout.c (do_copy): Bugfix (idle mode)
+

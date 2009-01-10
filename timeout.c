@@ -21,6 +21,9 @@
  * 02110-1301 USA.
  *
  * $Log$
+ * Revision 1.4  2009-01-10 00:12:22  tino
+ * Minor output fix for timeout in pipe case
+ *
  * Revision 1.3  2008-11-02 00:40:07  tino
  * Bugfix, idle mode was inverted
  *
@@ -140,7 +143,7 @@ check(const char *what)
 {
   TINO_ALARM_RUN();
   if (mark)
-    to("STDIN");
+    to(what);
 }
 
 static void

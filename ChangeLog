@@ -1,3 +1,7 @@
+2009-01-10  Valentin Hilbig  <tino@zoo.03.softkill.net>
+
+	* timeout.c (check): forgot to add correct timeout cause
+
 2008-11-02  Valentin Hilbig  <tino@firebird.03.softkill.net>
 
 	* timeout.c (do_copy): Bugfix (idle mode)

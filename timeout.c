@@ -21,6 +21,9 @@
  * 02110-1301 USA.
  *
  * $Log$
+ * Revision 1.5  2010-10-20 23:12:30  tino
+ * fork problem returns 210, child exec fail returns 127 (like bash)
+ *
  * Revision 1.4  2009-01-10 00:12:22  tino
  * Minor output fix for timeout in pipe case
  *
@@ -204,8 +207,10 @@ do_fork(char **argv)
   pid_t		pid, tmp;
   const char	*s;
 
-  pid	= tino_fork_exec(0, 1, 2, argv, NULL, 0, NULL);
+  pid	= tino_fork_execE(NULL, 0, argv, NULL, 0, NULL);
   info("[%ld] exec %s", (long)pid, argv[0]);
+  if (pid==(pid_t)-1)
+    ex("fork");
   nr	= 0;
   while ((tmp=waitpid((pid_t)-1, &status, 0))!=pid)
     {

@@ -1,7 +1,2 @@
-Fixes for wrong return values.
-
-Returns 127 in case of child exec fails.
-
-Returns 210 on fork fails as it ought to (instead of -1 previously)
-
-As always, nearly not tested at all.
+Announcements are now in the git commit log:
+git log --follow VERSION

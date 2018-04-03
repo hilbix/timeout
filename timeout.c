@@ -225,7 +225,7 @@ do_fork(char **argv)
 	  nr++;
 	}
 
-      if (pid==(pid_t)-1)
+      if (tmp==(pid_t)-1)
 	{
 	  if (errno==EINTR)
 	    continue;

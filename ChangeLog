@@ -1,3 +1,9 @@
+This is the last entry, rest see git changelog.
+
+2018-04-03  Valentin Hilbig  <tino@medusa.03.softkill.org>
+
+	* timeout.c (do_fork): BUGFIX checked the wrong PID
+
 2010-10-21  Valentin Hilbig  <tino@zoo.03.softkill.net>
 
 	* timeout.c (do_fork): bugfix, on fork failure timeout returned -1
